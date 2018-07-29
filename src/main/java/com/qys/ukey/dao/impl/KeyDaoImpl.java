@@ -2,9 +2,16 @@ package com.qys.ukey.dao.impl;
 
 import com.qys.ukey.dao.KeyDao;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Author : qiaoyongshuo
@@ -19,7 +26,18 @@ public class KeyDaoImpl implements KeyDao {
 
     @Override
     public String saveBDID() {
-        return null;
+        String sql = "insert into dbid (name) values ('key')";
+
+        KeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                return  preparedStatement;
+            }
+        }, holder);
+
+        return holder.getKey().toString();
     }
 
     @Override

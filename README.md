@@ -1,18 +1,17 @@
-# uKey - 唯一主键生成策略
+1 数据库主键
 
-## DBID
-### 概述
-使用BD的主键递增策略，保证唯一性    
-优点是操作简单，缺点是性能严重依赖DB，可扩展性差。   
+通过数据库递增策略，保证key唯一性
+''' 
+begin;
+REPLACE INTO Tickets64 (stub) VALUES ('a');
+SELECT LAST_INSERT_ID();
+commit;
+''' 
+优点
 
-### 改进策略
-加机器，设置起始值，和递增梯度
+设置简单
 
+缺点
 
-
-## UUID
-
-## SNOWFLAKE
-
-## LEAF
+性能严重依赖DB，扩展性较差。
 
